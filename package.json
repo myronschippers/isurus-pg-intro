@@ -1,0 +1,15 @@
+{
+  "name": "isurus-pg-intro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Myron R Schippers Jr",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "epress": "0.0.1-security"
+  }
+}
