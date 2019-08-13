@@ -36,48 +36,90 @@ $ npm install pg
 ```
 
 ### Setup PG to connect to the database
-```JS
-```
+
+*starting `server.js` with:*
+
 ```JS
 const express = require('express');
 const bodyParser = require('body-parser');
+
+const app = express();
+const PORT = 5000;
+
+app.use(express.static('server/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.listen(PORT, () => {
+    console.log('Listening on port: ', PORT);
+});
+```
+
+*import / require pg:*
+
+```JS
 const pg = require('pg');
+```
 
+*creating our pool and configuration:*
 
+```JS
 const Pool = pg.Pool;
 const pool = new Pool({
-    database: 'songs', // the name of database, This can change!
-    host: 'localhost', // where is your database?
-    port: 5432, // the port for your database, 5432 is default for postgres
-    max: 10, // how many connections (queries) at one time
-    idleTimeoutMillis: 30000 // 30 second to try to connect, otherwise cancel query
+    database: 'music_library',
+    host: 'localhost',
+    port: 5432,
+    max: 10,
+    idleTimeoutMillis: 30000,
 });
+```
 
-// .on here looks familiar...this is how node can handle arbitrary events
-// this is NOT required but it is very useful for debugging
+*creating event listeners for debugging our pool connection:*
+
+```JS
 pool.on('connect', () => {
-    console.log('Postgresql connected');
-});
+    console.log('Pool is connected');
+})
 
-// the pool with emit an error on behalf of any idle clients
-// it contains if a back end error or network partition happens
 pool.on('error', (error) => {
-    console.log('Error with postgres pool', error)
+    console.log('Oh NO ERROR: ', error);
 });
+```
 
-// Setup express (same as before)
-const app = express();
+*create GET API route:*
 
-// Setup body parser - to translating request body into JSON
-app.use( bodyParser.urlencoded({ extended: true }));
-app.use( bodyParser.json() );
-app.use(express.static('server/public'));
+```JS
+app.get('/api/all-songs', (req, res) => {
+    const queryText = 'SELECT * FROM "songs";';
 
-// Routes would go here
+    pool.query(queryText)
+        .then((result) => {
+            console.log(result)
+            res.send(result.rows);
+        })
+        .catch((err) => {
+            console.log('Error: ', err);
+            res.sendStatus(500);
+        });
+});
+```
 
-// Start express
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log('up and running on port', PORT);
+*create GET API route:*
+
+```JS
+app.post('/api/song', (req, res) => {
+    const newSong = req.body;
+    const queryText = `INSERT INTO "songs" ("artist", "track", "published")
+                        VALUES ($1, $2, $3);`;
+    
+    pool.query(queryText, [newSong.artist, newSong.track, newSong.published])
+        .then((result) => {
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log('Error posting: ', err);
+            res.sendStatus(500);
+        });
+
 });
 ```
