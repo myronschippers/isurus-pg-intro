@@ -1,6 +1,6 @@
 # Introduction to PG and Pool, Talking with Postgres
 
-[PG](https://www.npmjs.com/package/pg) is a node module that allows us to communicate with our PostgreSQL database.
+[PG](https://www.npmjs.com/package/pg) is a node module that allows us to communicate with our PostgreSQL database. The server code leverages Postman for testing the Server-side database connections.
 
 PG lives between the server and database:
 
