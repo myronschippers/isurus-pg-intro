@@ -6,6 +6,7 @@ function init() {
 
     // event listeners
     $('.s-add-song-btn').on('click', clickAddNewSong);
+    $('.js-songs-list').on('click', '.js-btn-delete', clickDeleteSong);
 
     getSongs();
 }
@@ -24,6 +25,13 @@ function clickAddNewSong(event) {
     });
 
     postSong(newSongData);
+}
+
+function clickDeleteSong(event) {
+    const buttonDataObject = $(this).data();
+    const songId = buttonDataObject.id;
+
+    deleteSong(songId);
 }
 
 //
@@ -59,6 +67,20 @@ function postSong(songData) {
     });
 }
 
+function deleteSong(id) {
+    $.ajax({
+        type: 'DELETE',
+        url: `/api/songs/delete/${id}`,
+    })
+    .then(function(serverResponse) {
+        getSongs();
+    })
+    .catch(function(err) {
+        console.log('Error deleting song: ', err);
+        alert('There was Error deleting a song.');
+    });
+}
+
 //
 // DOM / View rendering
 // ----------
@@ -79,6 +101,13 @@ function render (songsDataList) {
                     ${song.track},
                     <p>by: ${song.artist}</p> 
                     <p>published on: ${song.published}</p> 
+                    <button
+                        class="js-btn-delete btn"
+                        data-id="${song.id}"
+                        data-something="WORD"
+                    >
+                        Delete
+                    </button>
                 </div>
             </li>
         `);

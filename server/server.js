@@ -4,10 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 5000;
 
-<<<<<<< HEAD
 // Import routes
-=======
->>>>>>> develop
 const songsRouter = require('./routes/songs.routes');
 
 // Extracted Pool setup into ./modules/pool.js
