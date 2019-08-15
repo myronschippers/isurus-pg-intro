@@ -1,5 +1,3 @@
-import { get } from "http";
-
 $(document).ready(init);
 
 function init() {
@@ -71,4 +69,17 @@ function clearFields() {
 
 function render (songsDataList) {
     const $songsList = $('.js-song-list');
+
+    $songsList.empty();
+    for (let song of songsDataList) {
+        $songsList.append(`
+            <li>
+                <div class="songPill">
+                    ${song.track},
+                    <p>by: ${song.artist}</p> 
+                    <p>published on: ${song.published}</p> 
+                </div>
+            </li>
+        `);
+    }
 }
