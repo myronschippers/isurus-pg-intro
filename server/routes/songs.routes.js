@@ -58,4 +58,21 @@ router.delete('/delete/:id', (req, res) => {
         });
 })
 
+// "/api/songs/..."
+router.put('/published/:id', (req, res) => {
+    const songObject = req.body;
+    const songId = req.params.id;
+    
+    const queryText = `UPDATE "songs" SET "published"=$1 WHERE id=$2;`;
+
+    pool.query(queryText, [songObject.published, songId])
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('Error updating database: ', err);
+            res.sendStatus(500);
+        });
+});
+
 module.exports = router;
