@@ -5,6 +5,8 @@ const pg = require('pg');
 const app = express();
 const PORT = 5000;
 
+const songsRouter = require('./routes/songs.routes');
+
 // Extracted Pool setup into ./modules/pool.js
 // ----------
 
