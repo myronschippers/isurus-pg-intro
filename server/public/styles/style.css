@@ -92,3 +92,7 @@ Song Pill
     background: white;
     padding: 6px;
 }
+
+.hide {
+    display: none;
+}
