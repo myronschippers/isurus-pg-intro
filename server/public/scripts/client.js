@@ -21,17 +21,30 @@ function clickAddNewSong(event) {
     const $songInputs = $('.js-song-input');
 
     $songInputs.each(function(inputElement) {
-        const songDataKey = $('');
+        const elementDataKey = $(this).data().songKey;
+        newSongData[elementDataKey] = $(this).val();
     });
 
-
+    postSong(newSongData);
 }
 
 //
 // API / Server connections
 // ----------
 
-function getSongs() {}
+function getSongs() {
+    $.ajax({
+        type: 'GET',
+        url: '/api/songs',
+    })
+    .then(function(serverResponse) {
+        render();
+    })
+    .catch(function(err) {
+        console.log('Error getting songs: ', err);
+        alert('There was an Error getting new songs.');
+    });
+}
 
 function postSong(songData) {
     $.ajax({
@@ -42,6 +55,10 @@ function postSong(songData) {
     .then(function(serverResponse) {
         getSongs();
     })
+    .catch(function(err) {
+        console.log('Error posting song: ', err);
+        alert('There was Error posting new song.');
+    });
 }
 
 //
@@ -53,5 +70,5 @@ function clearFields() {
 }
 
 function render (songsDataList) {
-    const $songsList = $('.js-song-list')
+    const $songsList = $('.js-song-list');
 }
