@@ -4,9 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="vendors/jquery.min.js"></script>
+    <script src="scripts/client.js"></script>
+
     <title>PG Intro</title>
 </head>
 <body>
     <h1>Introduction to PG</h1>
+
+    <p><a href="https://www.npmjs.com/package/pg" target="_blank">PG</a> is a node module that allows us to communicate with our PostgreSQL database. The server code leverages Postman for testing the Server-side database connections.</p>
+
+    <h2>Songs</h2>
+
+    <div class="js-song-form box">
+        <input
+            class="js-song-input"
+            type="text"
+            name="artist"
+            data-song-key="artist"
+            placeholder="Artist"
+        />
+        <input
+            class="js-song-input"
+            type="text"
+            name="track"
+            data-song-key="track"
+            placeholder="Track"
+        />
+        <input
+            class="js-song-input"
+            type="text"
+            name="published"
+            data-song-key="published"
+            placeholder="Published"
+        />
+        <button class="js-add-song-btn">Add Song</button>
+    </div>
+
+    <div class="box">
+        <ul class="js-songs-list songsList">
+        </ul>
+    </div>
 </body>
 </html>
