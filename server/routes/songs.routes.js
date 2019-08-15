@@ -43,4 +43,19 @@ router.post('/', (req, res) => {
 
 });
 
+router.delete('/delete/:id', (req, res) => {
+    console.log(req.params);
+
+    const queryText = `DELETE FROM "songs" WHERE id=$1`;
+
+    pool.query(queryText, [req.params.id])
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('Error deleting: ', err);
+            res.sendStatus(500);
+        });
+})
+
 module.exports = router;
