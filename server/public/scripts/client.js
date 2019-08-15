@@ -36,7 +36,7 @@ function getSongs() {
         url: '/api/songs',
     })
     .then(function(serverResponse) {
-        render();
+        render(serverResponse);
     })
     .catch(function(err) {
         console.log('Error getting songs: ', err);
@@ -68,8 +68,9 @@ function clearFields() {
 }
 
 function render (songsDataList) {
-    const $songsList = $('.js-song-list');
+    const $songsList = $('.js-songs-list');
 
+    console.log(songsDataList);
     $songsList.empty();
     for (let song of songsDataList) {
         $songsList.append(`

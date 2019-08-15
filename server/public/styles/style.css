@@ -23,6 +23,7 @@ Box
     border: 1px solid #C0C0C0;
     border-radius: 3px;
     background: white;
+    padding: 6px;
 }
 
 .box + .box {
@@ -89,4 +90,5 @@ Song Pill
     border: 1px solid #87CEEB;
     border-radius: 3px;
     background: white;
+    padding: 6px;
 }
